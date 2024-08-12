@@ -4,16 +4,17 @@ import { checkValidData } from "../utils/validate";
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../utils/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 
 
 const Login = () => {
     const [isSignInForm, setisSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const name = useRef(null);
@@ -44,23 +45,25 @@ const Login = () => {
                     const user = userCredential.user;
                     updateProfile(user, {
                         displayName: name.current.value,
-                        photoURL: "https://tse1.mm.bing.net/th?id=OIP.8li1g3WASRlQCpV6X54VCQHaHa&pid=Api&P=0&h=180"
-                    }).then(() => {
-                        const { uid, email, displayName, photoURL } = auth.currentUser; //Updated value od user
-                        dispatch(addUser({
-                            uid: uid,
-                            email: email,
-                            displayName: displayName,
-                            photoURL: photoURL,
-                        })
-                        );
-                        navigate("/browse");
-                    }).catch((error) => {
-                        // An error occurred
-                        setErrorMessage(error.message);
-                    });
+                        photoURL: USER_AVATAR,
+                    })
+                        .then(() => {
+                            const { uid, email, displayName, photoURL } = auth.currentUser; //Updated value od user
+                            dispatch
+                                (addUser({
+                                    uid: uid,
+                                    email: email,
+                                    displayName: displayName,
+                                    photoURL: photoURL,
+                                })
+                                );
+                            // navigate("/browse");
+                        }).catch((error) => {
+                            // An error occurred
+                            setErrorMessage(error.message);
+                        });
                     // console.log(user);
-                    navigate("/browse");
+                    // navigate("/browse");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -76,8 +79,8 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
-                    navigate("/browse");
+                    // console.log(user);
+                    // navigate("/browse");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
