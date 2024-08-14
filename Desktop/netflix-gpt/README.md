@@ -31,9 +31,11 @@
 -Build movie list
 -Build movie card
 -TMDB image CDN URL
--MAde the browse page amazing with tailwind CSS
+-Made the browse page amazing with tailwind CSS
 -usPopularMovies Custom Hook
-
+-GPT search page
+-GPT search Bar
+-Multi-Language feature in our App
 
 # Features
 -Login/Sign up
